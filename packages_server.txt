@@ -1,0 +1,3 @@
+lxc
+qemu
+qemu-arch-extra

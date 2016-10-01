@@ -1,0 +1,5 @@
+# disable wake from S3 on XHC1
+# should place under
+# /etc/systemd/system/xhc-disable.service
+# for arch linux
+SUBSYSTEM=="pci", KERNEL=="0000:00:14.0", ATTR{device}=="0x9c31" RUN+="/bin/sh -c '/bin/echo disabled > /sys$env{DEVPATH}/power/wakeup'"

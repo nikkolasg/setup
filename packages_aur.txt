@@ -1,0 +1,13 @@
+adwaita-x-dark-and-light-theme
+asoundconf
+gtk-theme-arc-git
+kbdlight
+linopen
+mbpfan-git
+networkmanager-l2tp
+pulseaudio-ctl
+thermald
+ttf-font-awesome
+ttf-google-fonts-git
+update-grub
+xf86-input-mtrack

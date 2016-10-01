@@ -103,6 +103,7 @@ backup() {
     echo "[+] Setting up cronjob for rsync"
     cmd="rsync -ravz --links --files-from $BACKUP_UPLOAD /home/$USER/ $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH > /dev/null 2>&1"
     ## every hour
+    echo -e "[+] Command to run for uploading: \n$cmd"
     job="0 * * * * $cmd"
     # from https://stackoverflow.com/questions/878600/how-to-create-cronjob-using-bash
     cat <(fgrep -i -v "$cmd" <(crontab -l)) <(echo "$job") | crontab -

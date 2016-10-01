@@ -55,3 +55,6 @@ ttf-google-fonts-git
 update-grub
 xf86-input-mtrack
 oh-my-zsh-git
+xorg-xinit
+xorg
+xorg-server

@@ -8,7 +8,7 @@ Set of scripts / configs to setup a new laptop / server with Archlinux /customiz
 * user:
   + create new user (given on cmd line)
   + install sudo & set user as sudoers
-* pacman:
+* packages:
   + configure pacman & update repo
   + install predefined packages for laptop mode. 
 * system:

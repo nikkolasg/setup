@@ -5,7 +5,7 @@
 # * user:
 #   + create new user (given on cmd line)
 #   + install sudo & set user as sudoers
-# * pacman:
+# * packages:
 #   + configure pacman & update repo
 #   + install predefined packages for laptop mode. 
 # * system:
@@ -47,7 +47,7 @@ user() {
 }
 
 
-pacman() {
+packages() {
     echo "[+] Configuring pacman & updating."
     cp pacman.conf /etc/pacman.conf
     chown root /etc/pacman.conf
@@ -111,7 +111,7 @@ backup() {
 
 all() {
     user
-    pacman
+    packages
     system
     backup
 }

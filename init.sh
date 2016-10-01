@@ -37,6 +37,7 @@ runAsUser() {
 }
 
 user() {
+    echo "[+] Creating the new user"
     useradd -m -G wheel -s /bin/bash $USER
     passwd $USER
 
@@ -47,7 +48,6 @@ user() {
 
 
 pacman() {
-
     echo "[+] Configuring pacman & updating."
     cp pacman.conf /etc/pacman.conf
     chown root /etc/pacman.conf

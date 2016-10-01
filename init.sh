@@ -92,13 +92,17 @@ backup() {
     read -p "[*] Enter username for the backup server: " BACKUP_USER
     read -p "[*] Enter the backup server address: " BACKUP_SERVER
     read -p "[*] Enter the backup path to merge with the current home: " BACKUP_PATH
-    folder=$(pwd)
+    folder="/home/$USER"
     BACKUP_DOWNLOAD=$folder/"download.rsync"
     BACKUP_UPLOAD=$folder/"upload.rsync"
+    cp "download.rsync" $BACKUP_DOWNLOAD
+    cp "upload.rsync" $BACKUP_UPLOAD
+    chown $USER:$USER $BACKUP_DOWNLOAD
+    chown $USER:$USER $BACKUP_UPLOAD
 
-    cmd='rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/'
-    echo -e "[+] Sync with the backup server to your home...\n$cmd"
-    runAsUser "$cmd"
+
+    echo "[+] Sync with the backup server to your home..."
+    runAsUser "rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/"
 
     echo "[+] Setting up cronjob for rsync"
     cmd="rsync -ravz --links --files-from $BACKUP_UPLOAD /home/$USER/ $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH > /dev/null 2>&1"

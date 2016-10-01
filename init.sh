@@ -94,10 +94,10 @@ backup() {
     read -p "[*] Enter the backup path to merge with the current home: " BACKUP_PATH
     folder=$(pwd)
     BACKUP_DOWNLOAD=$folder/"download.rsync"
-    BACKUP_UPLOAD=$folder/"upload.rync"
+    BACKUP_UPLOAD=$folder/"upload.rsync"
 
-    echo "[+] Sync with the backup server to your home..."
     cmd="rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/"
+    echo -e "[+] Sync with the backup server to your home...\n$cmd"
     runAsUser $cmd
 
     echo "[+] Setting up cronjob for rsync"

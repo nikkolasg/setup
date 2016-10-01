@@ -96,7 +96,7 @@ backup() {
     BACKUP_DOWNLOAD=$folder/"download.rsync"
     BACKUP_UPLOAD=$folder/"upload.rsync"
 
-    cmd="rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/"
+    cmd='rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/'
     echo -e "[+] Sync with the backup server to your home...\n$cmd"
     runAsUser $cmd
 

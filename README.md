@@ -22,4 +22,4 @@ Set of scripts / configs to setup a new laptop / server with Archlinux /customiz
     - It first asks the users these informations
   + install a cron job to periodically backup the folders in upload.rsync.
     The difference is to avoid downloading big files for a new setup.
-
+* all: makes all operations by default

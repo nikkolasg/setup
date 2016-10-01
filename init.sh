@@ -19,6 +19,7 @@
 #     - It first asks the users these informations
 #   + install a cron job to periodically backup the folders in upload.rsync.
 #     The difference is to avoid downloading big files for a new setup.
+# * all
 MODE="laptop"
 if [[ $EUID -ne 0 ]]; then
     echo "[-] This script is not made to be ran as normal user"
@@ -36,7 +37,6 @@ runAsUser() {
 }
 
 user() {
-    read -p "[*] Enter name of the user to create: " USER
     useradd -m -G wheel -s /bin/bash $USER
     passwd $USER
 
@@ -86,26 +86,38 @@ system() {
 }
 
 backup() {
+    echo "[+] Setup backup system"
+    sleep 1
     # rsync data folders
     read -p "[*] Enter username for the backup server: " BACKUP_USER
     read -p "[*] Enter the backup server address: " BACKUP_SERVER
     read -p "[*] Enter the backup path to merge with the current home: " BACKUP_PATH
-    read -p "[*] Enter the rsync include files for backup (default include.rsync): " BACKUP_INCLUDE
     folder=$(pwd)
-    if [[ -z $BACKUP_INCLUDE ]]; then
-        BACKUP_INCLUDE=$folder/"include.rsync"
-    fi
+    BACKUP_DOWNLOAD=$folder/"download.rsync"
+    BACKUP_UPLOAD=$folder/"upload.rync"
 
     echo "[+] Sync with the backup server to your home..."
-    sleep 0.8
-    runAsUser "rsync -ravz --links --files-from $BACKUP_INCLUDE $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/"
+    cmd="rsync -ravz --links --files-from $BACKUP_DOWNLOAD $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH /home/$USER/"
+    runAsUser $cmd
 
     echo "[+] Setting up cronjob for rsync"
-    command="rsync -ravz --links --files-from $BACKUP_INCLUDE /home/$USER/ $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH > /dev/null 2>&1"
+    cmd="rsync -ravz --links --files-from $BACKUP_UPLOAD /home/$USER/ $BACKUP_USER@$BACKUP_SERVER:$BACKUP_PATH > /dev/null 2>&1"
     ## every hour
-    job="0 * * * * $command"
+    job="0 * * * * $cmd"
     # from https://stackoverflow.com/questions/878600/how-to-create-cronjob-using-bash
-    cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
+    cat <(fgrep -i -v "$cmd" <(crontab -l)) <(echo "$job") | crontab -
 }
 
-$1
+all() {
+    user
+    pacman
+    system
+    backup
+}
+
+op=$2
+if [[ -z $2 ]]; then
+    op="all"
+fi
+
+$op

@@ -73,6 +73,12 @@ packages() {
     echo "[+] installing pre-defined packages ($MODE)."
     runAsUser "yaourt -S --needed --noconfirm - < packages.txt"
     runAsUser "yaourt -S --needed --noconfirm - < packages_$MODE.txt"
+    if [[ $MODE == "laptop" ]]; then
+        for p in $(cat packages_aur.txt); do
+            runAsUser "yaourt -S --noconfirm $p"
+        done
+    fi
+
     zsh=$(chsh -l | grep zsh)
     echo "[+] Setting zsh as main shell"
     runAsUser "chsh -s $zsh"

@@ -58,3 +58,9 @@ oh-my-zsh-git
 xorg-xinit
 xorg
 xorg-server
+whatsie
+thunderbird
+albert
+networkmanager
+nm-applet
+

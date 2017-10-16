@@ -66,3 +66,4 @@ nm-applet
 cups
 cups-pdf
 autorandr
+gnome-keyring

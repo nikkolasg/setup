@@ -63,4 +63,6 @@ thunderbird
 albert
 networkmanager
 nm-applet
-
+cups
+cups-pdf
+autorandr

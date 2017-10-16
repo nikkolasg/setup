@@ -75,7 +75,10 @@ packages() {
     runAsUser "yaourt -S --needed --noconfirm - < packages_$MODE.txt"
     if [[ $MODE == "laptop" ]]; then
         for p in $(cat packages_aur.txt); do
-            runAsUser "yaourt -S --noconfirm $p"
+            yaourt -Ss "$p"
+            if [[ "$?" -eq 1]]; then
+                runAsUser "yaourt -S --noconfirm $p"
+            fi
         done
     fi
 
